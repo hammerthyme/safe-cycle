@@ -1,9 +1,6 @@
 import React from "react";
-import Weather from "./Weather";
+import Directions from "./Directions";
 
-const Root = () => <Weather />;
+const Root = () => <Directions />;
 
 export default Root;
-
-//GET DONE //
-/* Form control to alert user if city wasn't accepted */
