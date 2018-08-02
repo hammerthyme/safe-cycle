@@ -24,8 +24,8 @@ class Directions extends Component {
     this.props.fetchDirections(start, end);
   };
   render() {
-    return (
-      <div style={{ textAlign: "center" }}>
+    return null;
+    /*   <div style={{ textAlign: "center" }}>
         <div>
           <Header
             as="h2"
@@ -63,8 +63,7 @@ class Directions extends Component {
             Submit
           </Button>
         </div>
-      </div>
-    );
+      </div> */
   }
 }
 
