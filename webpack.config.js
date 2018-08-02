@@ -1,24 +1,30 @@
 const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const CleanWebpackPlugin = require("clean-webpack-plugin");
+const { resolve } = path;
 
 module.exports = {
   entry: {
-    app: "./src/index.js",
-    print: "./src/print.js"
+    app: ["babel-polyfill", "./app/index.js"]
   },
-  devtool: "inline-source-map",
+  mode: "development",
   devServer: {
     contentBase: "./public"
   },
-  plugins: [
-    new CleanWebpackPlugin(["dist"]),
-    new HtmlWebpackPlugin({
-      title: "Development"
-    })
-  ],
   output: {
     filename: "bundle.js",
     path: path.resolve(__dirname, "public")
+  },
+  module: {
+    rules: [
+      {
+        test: /jsx?$/,
+        include: resolve(__dirname, "./app"),
+        exclude: /(node_modules|bower_components)/,
+        loader: "babel-loader"
+      },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"]
+      }
+    ]
   }
 };
