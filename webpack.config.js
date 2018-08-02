@@ -1,17 +1,16 @@
-const path = require("path");
-const { resolve } = path;
+const { resolve } = require("path");
 
 module.exports = {
-  entry: {
-    app: ["babel-polyfill", "./app/index.js"]
+  entry: ["babel-polyfill", "./app/index.js"], // assumes your entry point is the index.js in the root of your project folder
+  output: {
+    path: __dirname, // assumes your bundle.js will also be in the root of your project folder
+    filename: "./public/bundle.js"
   },
   mode: "development",
-  devServer: {
-    contentBase: "./public"
-  },
-  output: {
-    filename: "bundle.js",
-    path: path.resolve(__dirname, "public")
+  context: __dirname,
+  devtool: "source-map",
+  resolve: {
+    extensions: [".js", ".jsx"]
   },
   module: {
     rules: [
