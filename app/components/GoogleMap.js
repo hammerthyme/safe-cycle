@@ -1,6 +1,7 @@
-import React, { Component } from "react";
-import { compose, withProps } from "recompose";
-import { withScriptjs, withGoogleMap, GoogleMap } from "react-google-maps";
+import React from "react";
+import { compose, withProps, lifecycle } from "recompose";
+import { withScriptjs, withGoogleMap } from "react-google-maps";
+import RenderMap from "./RenderMap";
 
 const MyMap = compose(
   withProps({
@@ -11,19 +12,30 @@ const MyMap = compose(
     mapElement: <div style={{ height: `100%` }} />
   }),
   withScriptjs,
-  withGoogleMap
-)(() => {
-  const center = {
-    lat: 40.7128, //NYC coordinates
-    lng: -74.006
-  };
-  const zoom = 10;
-  return (
-    <div>
-      <GoogleMap defaultCenter={center} defaultZoom={zoom} />
-    </div>
-  );
-});
+  withGoogleMap,
+  lifecycle({
+    componentDidMount() {
+      const DirectionsService = new google.maps.DirectionsService();
+      DirectionsService.route(
+        {
+          origin: new google.maps.LatLng(40.681181, -73.946858),
+          destination: new google.maps.LatLng(40.705076, -74.00916),
+          travelMode: "BICYCLING" //was google.maps.TravelMode.BYCYCLING
+        },
+        //upon retrieving directions, invokes callback passing in DirectionsResult and DirectionsStatus
+        (result, status) => {
+          if (status === google.maps.DirectionsStatus.OK) {
+            this.setState({
+              directions: result
+            });
+          } else {
+            console.error("error fetching directions");
+          }
+        }
+      );
+    }
+  })
+)(props => RenderMap(props));
 
 export default MyMap;
 
