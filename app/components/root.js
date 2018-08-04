@@ -7,8 +7,7 @@ import { Route, Switch } from "react-router-dom";
 const Root = () => {
   return (
     <Switch>
-      <Route exact path="/" component={Directions} />
-      <Route path="/map" component={Navbar} />
+      <Route exact path="/" component={Navbar} />
     </Switch>
   );
 };
