@@ -4,6 +4,7 @@ import mapLatLngDirections from "../functions/mapLatLngDirections";
 // ACTION TYPES //
 const GET_DIRECTIONS = "GET_DIRECTIONS";
 const GET_ACCIDENTS = "GET_ACCIDENTS";
+const CLEAR_DIRECTIONS = "CLEAR_DIRECTIONS";
 
 // ACTION CREATORS //
 const getDirections = directions => ({
@@ -13,6 +14,9 @@ const getDirections = directions => ({
 const getAccidents = accidents => ({
   type: GET_ACCIDENTS,
   accidents
+});
+export const clearDirections = () => ({
+  type: CLEAR_DIRECTIONS
 });
 
 // THUNK CREATORS //
@@ -52,6 +56,8 @@ const rootReducer = (state = initialState, action) => {
       return { ...state, directions: action.directions };
     case GET_ACCIDENTS:
       return { ...state, accidents: action.accidents };
+    case CLEAR_DIRECTIONS:
+      return { directions: {}, accidents: [] };
     default:
       return state;
   }

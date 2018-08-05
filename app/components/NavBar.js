@@ -1,8 +1,8 @@
 import React from "react";
 import GenerateGoogleMap from "./GenerateGoogleMap";
-import { Input, Menu, Header } from "semantic-ui-react";
+import { Input, Menu, Header, Button } from "semantic-ui-react";
 import { connect } from "react-redux";
-import { fetchDirections } from "../reducers/directions";
+import { fetchDirections, clearDirections } from "../reducers/directions";
 
 const googleMapProps = {
   googleMapURL:
@@ -32,6 +32,10 @@ class NavBar extends React.Component {
     this.props.fetchDirections(start, end);
     this.setState({ start: "", end: "" });
   };
+  handleClear = () => {
+    this.props.clearDirections();
+  };
+
   render() {
     return (
       <div>
@@ -62,6 +66,13 @@ class NavBar extends React.Component {
                 onChange={this.handleChange}
               />
             </Menu.Item>
+            {this.props.directions.status && (
+              <Menu.Item>
+                <Button basic color="red" onClick={this.handleClear}>
+                  Clear Search
+                </Button>
+              </Menu.Item>
+            )}
           </Menu>
         </div>
         <div>
@@ -71,12 +82,15 @@ class NavBar extends React.Component {
     );
   }
 }
-
+const mapState = state => ({
+  directions: state.directions
+});
 const mapDispatch = dispatch => ({
-  fetchDirections: (start, end) => dispatch(fetchDirections(start, end))
+  fetchDirections: (start, end) => dispatch(fetchDirections(start, end)),
+  clearDirections: () => dispatch(clearDirections())
 });
 
 export default connect(
-  null,
+  mapState,
   mapDispatch
 )(NavBar);

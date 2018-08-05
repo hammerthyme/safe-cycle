@@ -9,7 +9,7 @@ class RenderMap extends Component {
       lat: 40.7128, //NYC coordinates
       lng: -74.006
     };
-    const zoom = 9;
+    const zoom = 11;
     return (
       <div>
         <GoogleMap defaultCenter={center} defaultZoom={zoom}>
