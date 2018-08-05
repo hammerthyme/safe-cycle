@@ -14,7 +14,7 @@ class RenderMapWrapper extends Component {
     return (
       <div>
         <GoogleMap defaultCenter={center} defaultZoom={zoom}>
-          {this.props.directions.length && (
+          {this.props.directions && (
             <DirectionsRenderer directions={this.props.directions} />
           )}
           {this.props.accidents.length ? (
