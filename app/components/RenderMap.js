@@ -10,7 +10,6 @@ class RenderMap extends Component {
       lng: -74.006
     };
     const zoom = 9;
-    console.log(this.props);
     return (
       <div>
         <GoogleMap defaultCenter={center} defaultZoom={zoom}>

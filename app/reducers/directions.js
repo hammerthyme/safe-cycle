@@ -21,8 +21,10 @@ export const fetchDirections = (start, end) => dispatch => {
   const DirectionsService = new google.maps.DirectionsService();
   DirectionsService.route(
     {
-      origin: new google.maps.LatLng(40.681181, -73.946858),
-      destination: new google.maps.LatLng(40.705076, -74.00916),
+      /*  origin: new google.maps.LatLng(40.681181, -73.946858),
+      destination: new google.maps.LatLng(40.705076, -74.00916), */
+      origin: start,
+      destination: end,
       travelMode: "BICYCLING" //was google.maps.TravelMode.BYCYCLING
     },
     //upon retrieving directions, invokes callback passing in DirectionsResult and DirectionsStatus
