@@ -33,7 +33,7 @@ class RenderAccidents extends Component {
       const totalAffected = cyclistsInjured + cyclistsKilled;
       const percentTotal =
         (totalAffected / accidentMap.values().next().value.length) * 100;
-      const radiusLength = (0.8 * totalAffected + 0.2 * percentTotal) * 10;
+      const radiusLength = (0.8 * totalAffected + 0.2 * percentTotal) * 15;
       const position = accidentMap.keys().next().value; //access latlng coordinates in Map
       return (
         <div key={idx}>
