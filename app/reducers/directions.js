@@ -1,38 +1,61 @@
-import axios from "axios";
+import fetchAccidentData from "../functions/fetchAccidentData";
+import mapLatLngDirections from "../functions/mapLatLngDirections";
 
 // ACTION TYPES //
 const GET_DIRECTIONS = "GET_DIRECTIONS";
+const GET_ACCIDENTS = "GET_ACCIDENTS";
 
 // ACTION CREATORS //
 const getDirections = directions => ({
   type: GET_DIRECTIONS,
   directions
 });
+const getAccidents = accidents => ({
+  type: GET_ACCIDENTS,
+  accidents
+});
 
 // THUNK CREATORS //
 
-export const fetchDirections = (start, end) => async dispatch => {
-  console.log("start", start, "end", end);
-  const apiURL = "https://maps.googleapis.com/maps/api/directions/json?";
-  const startParam = `&origin=${start}`;
-  const endParam = `&destination=${end}`;
-  const bikeMode = "&mode=bicycling";
-  const apiKey = "&key=AIzaSyDr3cIycd9ql4MFBqYfOb80LcZSzFLmDVo";
-  const url = `${apiURL}${startParam}${endParam}${bikeMode}${apiKey}`;
-  const res = await axios.get(url);
-  const directions = res.data;
-  console.log(directions);
-  dispatch(getDirections(directions));
+export const fetchDirections = (start, end) => dispatch => {
+  const DirectionsService = new google.maps.DirectionsService();
+  DirectionsService.route(
+    {
+      origin: new google.maps.LatLng(40.681181, -73.946858),
+      destination: new google.maps.LatLng(40.705076, -74.00916),
+      travelMode: "BICYCLING" //was google.maps.TravelMode.BYCYCLING
+    },
+    //upon retrieving directions, invokes callback passing in DirectionsResult and DirectionsStatus
+    async (result, status) => {
+      if (status === google.maps.DirectionsStatus.OK) {
+        const latlngArr = mapLatLngDirections(result.routes[0].overview_path); //set of coordinates for entire directions route
+        const accidents = await fetchAccidentData(latlngArr);
+        console.log("ACCIDENTS", accidents);
+        dispatch(getDirections(result));
+        dispatch(getAccidents(accidents));
+      } else {
+        console.error("error fetching directions");
+      }
+    }
+  );
+};
+
+// INITIAL STATE //
+const initialState = {
+  directions: {},
+  accidents: []
 };
 
 // REDUCER //
-const directionsReducer = (state = {}, action) => {
+const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_DIRECTIONS:
-      return action.directions;
+      return { ...state, directions: action.directions };
+    case GET_ACCIDENTS:
+      return { ...state, accidents: action.accidents };
     default:
       return state;
   }
 };
 
-export default directionsReducer;
+export default rootReducer;

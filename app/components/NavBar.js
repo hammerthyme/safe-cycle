@@ -1,6 +1,16 @@
 import React from "react";
-import GoogleMap from "./GoogleMap";
+import GenerateGoogleMap from "./GoogleMap";
 import { Input, Menu, Header } from "semantic-ui-react";
+import { connect } from "react-redux";
+import { fetchDirections } from "../reducers/directions";
+
+const googleMapProps = {
+  googleMapURL:
+    "https://maps.googleapis.com/maps/api/js?key=AIzaSyDr3cIycd9ql4MFBqYfOb80LcZSzFLmDVo&v=3.exp",
+  loadingElement: <div style={{ height: `100%` }} />,
+  containerElement: <div style={{ height: `95vh` }} />,
+  mapElement: <div style={{ height: `100%` }} />
+};
 
 class NavBar extends React.Component {
   constructor() {
@@ -10,13 +20,17 @@ class NavBar extends React.Component {
       end: ""
     };
   }
+
   handleChange = evt => {
     this.setState({
       [evt.target.name]: evt.target.value
     });
   };
-  handleClick = evt => {
+  handleSubmit = evt => {
     evt.preventDefault();
+    const { start, end } = this.state;
+    this.props.fetchDirections(start, end);
+    this.setState({ start: "", end: "" });
   };
   render() {
     return (
@@ -42,7 +56,7 @@ class NavBar extends React.Component {
                   type: "submit",
                   content: "Go",
                   color: "teal",
-                  onClick: this.handleClick
+                  onClick: this.handleSubmit
                 }}
                 placeholder="End"
                 onChange={this.handleChange}
@@ -51,11 +65,18 @@ class NavBar extends React.Component {
           </Menu>
         </div>
         <div>
-          <GoogleMap />
+          <GenerateGoogleMap {...googleMapProps} />
         </div>
       </div>
     );
   }
 }
 
-export default NavBar;
+const mapDispatch = dispatch => ({
+  fetchDirections: (start, end) => dispatch(fetchDirections(start, end))
+});
+
+export default connect(
+  null,
+  mapDispatch
+)(NavBar);
