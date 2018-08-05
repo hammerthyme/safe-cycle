@@ -1,5 +1,5 @@
 import React from "react";
-import GenerateGoogleMap from "./GoogleMap";
+import GenerateGoogleMap from "./GenerateGoogleMap";
 import { Input, Menu, Header } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { fetchDirections } from "../reducers/directions";

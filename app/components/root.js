@@ -1,6 +1,4 @@
 import React from "react";
-import Directions from "./Directions";
-import GoogleMap from "./GoogleMap";
 import Navbar from "./Navbar";
 import { Route, Switch } from "react-router-dom";
 

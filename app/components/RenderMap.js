@@ -3,7 +3,7 @@ import { GoogleMap, DirectionsRenderer } from "react-google-maps";
 import RenderAccidents from "./RenderAccidents";
 import { connect } from "react-redux";
 
-class RenderMapWrapper extends Component {
+class RenderMap extends Component {
   render() {
     const center = {
       lat: 40.7128, //NYC coordinates
@@ -14,13 +14,11 @@ class RenderMapWrapper extends Component {
     return (
       <div>
         <GoogleMap defaultCenter={center} defaultZoom={zoom}>
-          {this.props.directions && (
+          {this.props.directions.status && (
             <DirectionsRenderer directions={this.props.directions} />
           )}
-          {this.props.accidents.length ? (
+          {this.props.accidents.length && (
             <RenderAccidents accidents={this.props.accidents} />
-          ) : (
-            <h1>loading</h1>
           )}
         </GoogleMap>
       </div>
@@ -33,4 +31,4 @@ const mapState = state => ({
   accidents: state.accidents
 });
 
-export default connect(mapState)(RenderMapWrapper);
+export default connect(mapState)(RenderMap);
