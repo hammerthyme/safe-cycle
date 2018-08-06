@@ -17,12 +17,12 @@ class AnimateCircle extends Component {
   }
   componentDidUpdate(prevState) {
     if (this.state.radius !== prevState.radius) {
-      setInterval(() => {
+      setTimeout(() => {
         let { radius } = this.state;
         if (radius < this.state.maxRadius) {
           this.setState({ radius: this.state.radius + 10 });
         }
-      }, 200);
+      }, 50);
     }
   }
   render() {
