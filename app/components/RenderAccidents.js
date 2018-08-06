@@ -1,16 +1,28 @@
 import React, { Component } from "react";
 import { Circle, InfoWindow } from "react-google-maps";
 import displayData from "../functions/displayData";
+import AnimateCircle from "./AnimateCirlce";
 
 class RenderAccidents extends Component {
   constructor() {
     super();
-    this.state = {
-      isOpen: false,
-      showIdx: -1
-    };
+    this.state = { isOpen: false, showIdx: -1 };
   }
-  componentDidMount() {}
+  // componentDidMount() {
+  //   this.setState({ radius: this.state.radius + 1 });
+  //   const [cyclistsInjured, cyclistsKilled, percentageTotal] = displayData(
+  //      accidentMap
+  //      )
+  // }
+  // componentDidUpdate(prevState) {
+  //   if (this.state.radius !== prevState.radius) {
+  //     setInterval(() => {
+  //       let { radius } = this.state;
+  //       let maxRadius;
+  //       if (radius < 500) this.setState({ radius: this.state.radius + 10 });
+  //     }, 500);
+  //   }
+  // }
 
   handleClick = idx => {
     this.setState({
@@ -33,10 +45,12 @@ class RenderAccidents extends Component {
       const totalAffected = cyclistsInjured + cyclistsKilled;
       const percentTotal =
         (totalAffected / accidentMap.values().next().value.length) * 100;
-      const radiusLength = (0.8 * totalAffected + 0.2 * percentTotal) * 15;
+      const radiusLength = totalAffected * 15;
+
       const position = accidentMap.keys().next().value; //access latlng coordinates in Map
       return (
         <div key={idx}>
+          {/* <AnimateCircle maxRadius={totalAffected} /> */}
           <Circle
             center={position}
             radius={radiusLength}
@@ -46,6 +60,7 @@ class RenderAccidents extends Component {
               fillColor: "red"
             }}
             onMouseDown={() => this.handleClick(idx)}
+            onRadiusChanged={() => console.log("fired")}
           />
           {this.state.isOpen &&
             this.state.showIdx === idx && (

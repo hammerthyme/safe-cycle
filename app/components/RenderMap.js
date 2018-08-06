@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { GoogleMap, DirectionsRenderer } from "react-google-maps";
 import RenderAccidents from "./RenderAccidents";
 import { connect } from "react-redux";
+import AnimateCircle from "./AnimateCirlce";
 
 class RenderMap extends Component {
   render() {
@@ -13,6 +14,7 @@ class RenderMap extends Component {
     return (
       <div>
         <GoogleMap defaultCenter={center} defaultZoom={zoom}>
+          {/* <AnimateCircle /> */}
           {this.props.directions.status && (
             <DirectionsRenderer directions={this.props.directions} />
           )}
