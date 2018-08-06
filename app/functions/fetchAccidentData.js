@@ -17,6 +17,7 @@ const AccidentData = async latlngArr => {
       currDataMap.set(currCoords, coordsMemo[stringifiedCoords]);
     } else {
       const latlngParam = `$where=within_circle(location,${lat},${lng},10)`;
+      // const cycleFilter = `%20AND%20(number_of_cyclist_injured>0%20OR%20number_of_cyclist_killed>0)`;
       const url = `${apiURL}${latlngParam}${appToken}`;
       const res = await axios.get(url);
       const accidentData = res.data;
