@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Circle } from "react-google-maps";
-import displayData from "../functions/displayData";
 
 class AnimateCircle extends Component {
   constructor() {
@@ -13,7 +12,7 @@ class AnimateCircle extends Component {
   componentDidMount() {
     this.setState({
       radius: this.state.radius + 10,
-      maxRadius: this.props.maxRadius * 25
+      maxRadius: this.props.maxRadius * 20
     });
   }
   componentDidUpdate(prevState) {
@@ -23,11 +22,10 @@ class AnimateCircle extends Component {
         if (radius < this.state.maxRadius) {
           this.setState({ radius: this.state.radius + 10 });
         }
-      }, 100);
+      }, 300);
     }
   }
   render() {
-    console.log(this.state.radius);
     return (
       <Circle
         center={this.props.position}
@@ -37,6 +35,7 @@ class AnimateCircle extends Component {
           strokeWeight: 0.5,
           fillColor: "red"
         }}
+        onMouseDown={() => this.props.handleClick(this.props.idx)}
       />
     );
   }
