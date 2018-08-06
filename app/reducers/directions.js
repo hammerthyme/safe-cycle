@@ -5,6 +5,7 @@ import mapLatLngDirections from "../functions/mapLatLngDirections";
 const GET_DIRECTIONS = "GET_DIRECTIONS";
 const GET_ACCIDENTS = "GET_ACCIDENTS";
 const CLEAR_DIRECTIONS = "CLEAR_DIRECTIONS";
+const START_LOADING = "START_LOADING";
 
 // ACTION CREATORS //
 const getDirections = directions => ({
@@ -19,9 +20,14 @@ export const clearDirections = () => ({
   type: CLEAR_DIRECTIONS
 });
 
+const startLoading = () => ({
+  type: START_LOADING
+});
+
 // THUNK CREATORS //
 
 export const fetchDirections = (start, end) => dispatch => {
+  dispatch(startLoading());
   const DirectionsService = new google.maps.DirectionsService();
   DirectionsService.route(
     {
@@ -45,7 +51,8 @@ export const fetchDirections = (start, end) => dispatch => {
 // INITIAL STATE //
 const initialState = {
   directions: {},
-  accidents: []
+  accidents: [],
+  isLoading: false
 };
 
 // REDUCER //
@@ -54,9 +61,11 @@ const rootReducer = (state = initialState, action) => {
     case GET_DIRECTIONS:
       return { ...state, directions: action.directions };
     case GET_ACCIDENTS:
-      return { ...state, accidents: action.accidents };
+      return { ...state, accidents: action.accidents, isLoading: false };
     case CLEAR_DIRECTIONS:
       return { directions: {}, accidents: [] };
+    case START_LOADING:
+      return { ...state, isLoading: true };
     default:
       return state;
   }

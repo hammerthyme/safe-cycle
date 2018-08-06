@@ -56,15 +56,21 @@ class NavBar extends React.Component {
               <Input
                 name="end"
                 value={this.state.end}
-                action={{
-                  type: "submit",
-                  content: "Go",
-                  color: "teal",
-                  onClick: this.handleSubmit
-                }}
                 placeholder="End"
                 onChange={this.handleChange}
-              />
+              >
+                <input />
+                {this.props.isLoading ? (
+                  <Button loading color="teal" />
+                ) : (
+                  <Button
+                    type="submit"
+                    content="Go"
+                    color="teal"
+                    onClick={this.handleSubmit}
+                  />
+                )}
+              </Input>
             </Menu.Item>
             {this.props.directions.status && (
               <Menu.Item>
@@ -83,7 +89,8 @@ class NavBar extends React.Component {
   }
 }
 const mapState = state => ({
-  directions: state.directions
+  directions: state.directions,
+  isLoading: state.isLoading
 });
 const mapDispatch = dispatch => ({
   fetchDirections: (start, end) => dispatch(fetchDirections(start, end)),
