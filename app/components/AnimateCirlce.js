@@ -22,7 +22,7 @@ class AnimateCircle extends Component {
         if (radius < this.state.maxRadius) {
           this.setState({ radius: this.state.radius + 10 });
         }
-      }, 300);
+      }, 200);
     }
   }
   render() {
