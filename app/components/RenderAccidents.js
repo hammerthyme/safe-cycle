@@ -31,12 +31,14 @@ class RenderAccidents extends Component {
       const position = accidentMap.keys().next().value; //access latlng coordinates in Map
       return (
         <div key={idx}>
-          <AnimateCircle
-            maxRadius={totalAffected}
-            position={position}
-            handleClick={this.handleClick}
-            idx={idx}
-          />
+          {totalAffected > 0 && (
+            <AnimateCircle
+              maxRadius={totalAffected}
+              position={position}
+              handleClick={this.handleClick}
+              idx={idx}
+            />
+          )}
           {this.state.isOpen &&
             this.state.showIdx === idx && (
               <InfoWindow

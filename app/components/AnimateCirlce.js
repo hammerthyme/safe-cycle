@@ -5,7 +5,7 @@ class AnimateCircle extends Component {
   constructor() {
     super();
     this.state = {
-      radius: 1,
+      radius: 0,
       maxRadius: 1000
     };
   }
