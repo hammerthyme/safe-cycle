@@ -23,18 +23,18 @@ class RenderAccidents extends Component {
   };
 
   render() {
-    return this.props.accidents.map((accidentMap, idx) => {
-      const [cyclistsInjured, cyclistsKilled, percentageTotal] = displayData(
-        accidentMap
-      );
+    // console.log(this.props.accidents)
+    return this.props.accidents.map((locationAccidents, idx) => {
+      const [cyclistsInjured, cyclistsKilled, percentageTotal] = displayData(locationAccidents);
       const totalAffected = cyclistsInjured + cyclistsKilled;
-      const position = accidentMap.keys().next().value; //access latlng coordinates in Map
+      const { lat, lng } = locationAccidents; //access latlng coordinates in Map
+      // console.log('posITION!!,', position)
       return (
         <div key={idx}>
           {totalAffected > 0 && (
             <AnimateCircle
               maxRadius={totalAffected}
-              position={position}
+              position={{lat, lng}}
               handleClick={this.handleClick}
               idx={idx}
             />
@@ -42,7 +42,7 @@ class RenderAccidents extends Component {
           {this.state.isOpen &&
             this.state.showIdx === idx && (
               <InfoWindow
-                options={{ position: position }}
+                options={{ position: {lat, lng} }}
                 onCloseClick={this.handleClose}
               >
                 <div>
