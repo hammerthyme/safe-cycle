@@ -37,10 +37,10 @@ export const fetchDirections = (start, end) => dispatch => {
     },
     async (result, status) => {
       if (status === google.maps.DirectionsStatus.OK) {
+        dispatch(getDirections(result));
         const latlngArr = mapLatLngDirections(result.routes[0].overview_path); //set of coordinates for entire directions route
         const accidents = await fetchAccidentData(latlngArr);
         dispatch(getAccidents(accidents));
-        dispatch(getDirections(result));
       } else {
         console.error("error fetching directions");
       }

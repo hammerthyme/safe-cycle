@@ -6,7 +6,7 @@ import { fetchDirections, clearDirections } from "../reducers/directions";
 
 const googleMapProps = {
   googleMapURL:
-    "https://maps.googleapis.com/maps/api/js?key=AIzaSyDr3cIycd9ql4MFBqYfOb80LcZSzFLmDVo&v=3.exp",
+    "https://maps.googleapis.com/maps/api/js?key=AIzaSyBxApj5c_Hvy6YwpeE9teEEnZeXWbBjBHc&v=3.exp",
   loadingElement: <div style={{ height: `100%` }} />,
   containerElement: <div style={{ height: `95vh` }} />,
   mapElement: <div style={{ height: `100%` }} />
